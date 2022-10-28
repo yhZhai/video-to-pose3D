@@ -48,12 +48,16 @@
 
 ## Usage
 
-0. place your video into `./outputs` folder. (I've prepared a test video).
+~~0. place your video into `./outputs` folder. (I've prepared a test video).~~
 
 ##### Single person video
 
-1. change the `video_path` in the `./videopose.py`
-2. Run it! You will find the rendered output video in the `./outputs` folder.
+~~1. change the `video_path` in the `./videopose.py`~~
+~~2. Run it! You will find the rendered output video in the `./outputs` folder.~~
+```
+python videopose.py --video {path-to-video}
+```
+
 
 ##### Multiple person video (Not implemented yet)
 

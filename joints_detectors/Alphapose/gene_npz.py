@@ -134,7 +134,7 @@ def handle_video(video_file):
     # writer = DataWriter(args.save_video, save_path, cv2.VideoWriter_fourcc(*'XVID'), fps, frameSize).start()
     writer = DataWriter(args.save_video).start()
     print('Start pose estimation...')
-    im_names_desc = tqdm(range(data_loader.length()))
+    im_names_desc = tqdm(range(data_loader.length()), desc="pose estimation")
     batchSize = args.posebatch
     for i in im_names_desc:
 
@@ -142,7 +142,7 @@ def handle_video(video_file):
         with torch.no_grad():
             (inps, orig_img, im_name, boxes, scores, pt1, pt2) = det_processor.read()
             if orig_img is None:
-                print(f'{i}-th image read None: handle_video')
+                # print(f'{i}-th image read None: handle_video')
                 break
             if boxes is None or boxes.nelement() == 0:
                 writer.save(None, None, None, None, None, orig_img, im_name.split('/')[-1])

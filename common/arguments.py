@@ -71,15 +71,17 @@ def parse_args():
     parser.add_argument('--viz-limit', type=int, default=-1, metavar='N', help='only render first N frames')
     parser.add_argument('--viz-downsample', type=int, default=1, metavar='N', help='downsample FPS by a factor N')
     parser.add_argument('--viz-size', type=int, default=5, metavar='N', help='image size')
+
     # self add
     parser.add_argument('--input-npz', dest='input_npz', type=str, default='', help='input 2d numpy file')
-    parser.add_argument('--video', dest='input_video', type=str, default='', help='input video name')
+    parser.add_argument('--video', type=str, default='', help='input video name')
 
     parser.set_defaults(bone_length_term=True)
     parser.set_defaults(data_augmentation=True)
     parser.set_defaults(test_time_augmentation=True)
 
     args = parser.parse_args()
+
     # Check invalid configuration
     if args.resume and args.evaluate:
         print('Invalid flags: --resume and --evaluate cannot be set at the same time')

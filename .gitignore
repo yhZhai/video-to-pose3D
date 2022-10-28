@@ -194,3 +194,5 @@ ENV/
 # Self-defined files
 /local_test/
 /lab_processing/
+outputs/
+
