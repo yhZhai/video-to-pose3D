@@ -195,4 +195,5 @@ ENV/
 /local_test/
 /lab_processing/
 outputs/
+*.DS_Store
 
