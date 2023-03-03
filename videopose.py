@@ -70,6 +70,10 @@ class Skeleton:
 
 
 def main(args):
+    '''
+    video -> 2D keypoints -> 3D pose -> render
+    '''
+
     # create the keypoint detection model
     detector_2d = get_detector_2d(args.detector_2d)
     assert detector_2d, "detector_2d should be in ({alpha, hr, open}_pose)"
