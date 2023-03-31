@@ -12,8 +12,8 @@ from common.utils import Timer, evaluate, add_path
 # from joints_detectors.openpose.main import generate_kpts as open_pose
 
 
-os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"  # see issue #152
-os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+# os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"  # see issue #152
+# os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 metadata = {
     "layout_name": "coco",
@@ -74,6 +74,9 @@ def main(args):
     video -> 2D keypoints -> 3D pose -> render
     '''
 
+    # detect if cuda is available
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
     # create the keypoint detection model
     detector_2d = get_detector_2d(args.detector_2d)
     assert detector_2d, "detector_2d should be in ({alpha, hr, open}_pose)"
@@ -106,8 +109,7 @@ def main(args):
     )
 
     # convert to gpu model
-    if torch.cuda.is_available():
-        model_pos = model_pos.cuda()
+    model_pos = model_pos.to(device)
 
     ckpt, time1 = ckpt_time(time0)
     print("-------------- load data spends {:.2f} seconds".format(ckpt))

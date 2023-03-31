@@ -68,6 +68,7 @@ def generate_kpts(video_file):
 
 
 def handle_video(video_file):
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     # =========== common ===============
     args.video = video_file
     base_name = os.path.basename(args.video)
@@ -122,7 +123,7 @@ def handle_video(video_file):
         pose_model = InferenNet_fast(4 * 1 + 1, pose_dataset)
     else:
         pose_model = InferenNet(4 * 1 + 1, pose_dataset)
-    pose_model.cuda()
+    pose_model.to(device)
     pose_model.eval()
     runtime_profile = {
         'dt': [],
@@ -159,7 +160,7 @@ def handle_video(video_file):
             num_batches = datalen // batchSize + leftover
             hm = []
             for j in range(num_batches):
-                inps_j = inps[j * batchSize:min((j + 1) * batchSize, datalen)].cuda()
+                inps_j = inps[j * batchSize:min((j + 1) * batchSize, datalen)].to(device)
                 hm_j = pose_model(inps_j)
                 hm.append(hm_j)
             hm = torch.cat(hm)

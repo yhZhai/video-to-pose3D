@@ -177,14 +177,14 @@ def evaluate(test_generator, model_pos, action=None, return_predictions=False):
     :param return_predictions: return predictions if true
     :return:
     """
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     joints_left, joints_right = list([4, 5, 6, 11, 12, 13]), list([1, 2, 3, 14, 15, 16])
     with torch.no_grad():
         model_pos.eval()
         N = 0
         for _, batch, batch_2d in test_generator.next_epoch():
             inputs_2d = torch.from_numpy(batch_2d.astype('float32'))
-            if torch.cuda.is_available():
-                inputs_2d = inputs_2d.cuda()
+            inputs_2d = inputs_2d.to(device)
             # Positional model
             predicted_3d_pos = model_pos(inputs_2d)
             if test_generator.augment_enabled():
