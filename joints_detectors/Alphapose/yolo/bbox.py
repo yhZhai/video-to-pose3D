@@ -54,6 +54,7 @@ def bbox_iou(box1, box2):
     
     
     """
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     #Get the coordinates of bounding boxes
     b1_x1, b1_y1, b1_x2, b1_y2 = box1[:,0], box1[:,1], box1[:,2], box1[:,3]
     b2_x1, b2_y1, b2_x2, b2_y2 = box2[:,0], box2[:,1], box2[:,2], box2[:,3]
@@ -66,7 +67,7 @@ def bbox_iou(box1, box2):
     
     #Intersection area
     
-    inter_area = torch.max(inter_rect_x2 - inter_rect_x1 + 1,torch.zeros(inter_rect_x2.shape).cuda())*torch.max(inter_rect_y2 - inter_rect_y1 + 1, torch.zeros(inter_rect_x2.shape).cuda())
+    inter_area = torch.max(inter_rect_x2 - inter_rect_x1 + 1,torch.zeros(inter_rect_x2.shape).to(device))*torch.max(inter_rect_y2 - inter_rect_y1 + 1, torch.zeros(inter_rect_x2.shape).to(device))
     
     #Union Area
     b1_area = (b1_x2 - b1_x1 + 1)*(b1_y2 - b1_y1 + 1)
@@ -94,8 +95,6 @@ def pred_corner_coord(prediction):
     prediction[ind_nz[0], ind_nz[1]] = box
     
     return prediction
-
-
 
 
 def write(x, batches, results, colors, classes):
