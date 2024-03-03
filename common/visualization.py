@@ -51,7 +51,7 @@ def downsample_tensor(X, factor):
 
 
 def render_animation(keypoints, poses, skeleton, fps, bitrate, azim, output, viewport,
-                     limit=-1, downsample=1, size=6, input_video_path=None, input_video_skip=0):
+                     limit=-1, downsample=1, size=6, input_video_path=None, input_video_skip=0, left_title="Input"):
     """
     TODO
     Render an animation. The supported output modes are:
@@ -67,7 +67,7 @@ def render_animation(keypoints, poses, skeleton, fps, bitrate, azim, output, vie
     ax_in.get_xaxis().set_visible(False)
     ax_in.get_yaxis().set_visible(False)
     ax_in.set_axis_off()
-    ax_in.set_title('Input')
+    ax_in.set_title(left_title)
 
     # prevent wired error
     _ = Axes3D.__class__.__name__
